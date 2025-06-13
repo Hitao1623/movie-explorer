@@ -10,8 +10,9 @@ import Login from "./pages/Login";
 
 export default function App() {
   return (
-  <FavoritesProvider>
+  
     <Router>
+      <FavoritesProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -21,7 +22,8 @@ export default function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      </FavoritesProvider>
     </Router>
-  </FavoritesProvider>
+  
   );
 }
