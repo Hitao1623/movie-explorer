@@ -23,3 +23,16 @@ and divide tasks
  
 Issues/help: 
 none so far
+
+2025.06.13
+Dang Huynh
+ 
+What was done: 
+Started favorites page and context
+ 
+What to do today: 
+Work on MovieDetail
+Help with favorites page, local storage version 
+ 
+Issues/help: 
+none so far
