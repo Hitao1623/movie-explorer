@@ -1,0 +1,59 @@
+.movie-card {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.poster-container {
+  position: relative;
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.movie-rating-bottom {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #000;
+}
+
+.star {
+  font-size: 16px;
+  color: #f5c518;
+}
+
+.movie-info-centered {
+  margin-top: 8px;
+}
+
+.movie-title-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+
+.movie-title-link:hover {
+  color: #1da1f2;
+}
+
+.movie-release {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.star {
+  font-size: 16px;
+}
