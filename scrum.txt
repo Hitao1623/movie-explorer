@@ -23,3 +23,13 @@ and divide tasks
  
 Issues/help: 
 none so far
+
+2025.6.13 Haitao Wang
+What did you do yesterday:
+Chose our project (Movie Explorer), assigned tasks, and built the basic web pages.
+
+What are you going to do today:
+Finish the navbar UI, the movie cards on the homepage, and implement three types of search.
+
+Any blockers / need help from the team:
+None so far.
