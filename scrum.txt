@@ -9,6 +9,17 @@ Choose our project, assign tasks and finish basic web pages
 any block/help from the team
 not at the moment
 
+--AMIR--
+
+Done yesterday : 	
+-> reviewed project description 
+-> watched videos related to React and authentication
+To do today: 	
+-> confirm the final project topic 
+-> begin setting up my individual module
+Any block/help:	
+-> none at the moment
+
 2025.06.12
 Dang Huynh
  
