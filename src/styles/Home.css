@@ -44,6 +44,31 @@
   cursor: pointer;
 }
 
+.main-video-container:hover .main-video,
+.main-video-container:hover .main-video-fallback {
+  transform: scale(1.015);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.side-thumb-wrapper:hover .side-thumb {
+  transform: scale(1.03);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.side-thumb-wrapper:hover .thumb-play-button,
+.main-video-container:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: transform 0.3s ease;
+}
+
 .nav-btn {
   position: absolute;
   top: 50%;
