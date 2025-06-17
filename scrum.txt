@@ -44,3 +44,24 @@ Finish the navbar UI, the movie cards on the homepage, and implement three types
 
 Any blockers / need help from the team:
 None so far.
+
+--2025.06.13 Amir--
+
+Done yesterday : 	
+-> chose the final project topic 
+-> completed initial module setup
+To do today: 	
+-> work on login and register page components
+Any block/help:	
+-> none
+
+--2025.06.15 Amir--
+
+Done yesterday : 	
+-> implemented context to Login/Register Pages + validation
+-> stored current user in localStorage
+To do today: 	
+-> work on Favorites & FavoritesContext
+-> implement favorite toggling functionality
+Any block/help:	
+-> none
