@@ -1,6 +1,6 @@
-// src/pages/MovieDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import FavoriteButton from "../components/FavoriteButton";
 
 export default function MovieDetail() {
   const { id } = useParams();
@@ -56,6 +56,8 @@ export default function MovieDetail() {
       </button>
 
       <h2 style={{ fontSize: "2rem", marginBottom: "10px" }}>{title}</h2>
+      
+
 
       {tagline && (
         <p style={{ fontStyle: "italic", color: "#777", marginBottom: "10px" }}>
@@ -63,11 +65,16 @@ export default function MovieDetail() {
         </p>
       )}
 
-      <img
-        src={imageUrl}
-        alt={`Poster for ${title}`}
-        style={{ width: "300px", borderRadius: "10px", marginBottom: "20px" }}
-      />
+      <div style={{ position: "relative", width: "300px", marginBottom: "20px" }}>
+        <img
+          src={imageUrl}
+          alt={`Poster for ${title}`}
+          style={{ width: "100%", borderRadius: "10px" }}
+        />
+        <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+          <FavoriteButton movie={movie} />
+        </div>
+      </div>
 
       <p><strong>Release Date:</strong> {release_date}</p>
       <p><strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}</p>
