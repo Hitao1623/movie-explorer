@@ -34,20 +34,9 @@ export default function MovieDetail() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!movie) return null;
 
-  const {
-    title,
-    poster_path,
-    release_date = "-",
-    genres,
-    overview,
-    runtime,
-    vote_average,
-    tagline,
-  } = movie;
+  const { title, poster_path, release_date = "-", genres, overview, runtime, vote_average, tagline } = movie;
 
-  const imageUrl = poster_path
-    ? `https://image.tmdb.org/t/p/w500${poster_path}`
-    : "/default-poster.jpg";
+  const imageUrl = poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : "/default-poster.jpg";
 
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
@@ -56,30 +45,28 @@ export default function MovieDetail() {
       </button>
 
       <h2 style={{ fontSize: "2rem", marginBottom: "10px" }}>{title}</h2>
-      
 
-
-      {tagline && (
-        <p style={{ fontStyle: "italic", color: "#777", marginBottom: "10px" }}>
-          {tagline}
-        </p>
-      )}
+      {tagline && <p style={{ fontStyle: "italic", color: "#777", marginBottom: "10px" }}>{tagline}</p>}
 
       <div style={{ position: "relative", width: "300px", marginBottom: "20px" }}>
-        <img
-          src={imageUrl}
-          alt={`Poster for ${title}`}
-          style={{ width: "100%", borderRadius: "10px" }}
-        />
+        <img src={imageUrl} alt={`Poster for ${title}`} style={{ width: "100%", borderRadius: "10px" }} />
         <div style={{ position: "absolute", top: "10px", right: "10px" }}>
           <FavoriteButton movie={movie} />
         </div>
       </div>
 
-      <p><strong>Release Date:</strong> {release_date}</p>
-      <p><strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}</p>
-      <p><strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}</p>
-      <p><strong>Genres:</strong> {genres?.map(g => g.name).join(", ") || "N/A"}</p>
+      <p>
+        <strong>Release Date:</strong> {release_date}
+      </p>
+      <p>
+        <strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}
+      </p>
+      <p>
+        <strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}
+      </p>
+      <p>
+        <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
+      </p>
 
       <p style={{ marginTop: "10px" }}>{overview}</p>
     </div>
