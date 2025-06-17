@@ -73,7 +73,7 @@ export default function Search() {
   };
 
   return (
-    <div style={{ marginTop: "10px", marginLeft: "40px", paddingBottom: "60px" }}>
+    <div style={{ marginTop: "10px", marginLeft: "180px", marginRight: "100px", paddingBottom: "60px" }}>
       <h2>
         {totalResults.toLocaleString()} Results for "{category === "genres" ? getGenreNameById(query) : query}"
       </h2>
