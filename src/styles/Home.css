@@ -1,0 +1,141 @@
+.home-container {
+  margin-top: 10px;
+  padding: 0 40px 60px;
+}
+
+.now-showing-header {
+  margin-left: 150px;
+  margin-bottom: 30px;
+}
+
+.video-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.main-video-container {
+  position: relative;
+  width: 760px;
+  height: 460px;
+}
+
+.main-video,
+.main-video-fallback {
+  width: 760px;
+  height: 460px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-btn.left {
+  left: 10px;
+}
+
+.nav-btn.right {
+  right: 10px;
+}
+
+.score-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.video-title {
+  text-align: center;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+.video-date {
+  text-align: center;
+  margin-top: 6px;
+  color: #555;
+}
+
+.side-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-thumb-wrapper {
+  position: relative;
+}
+
+.side-thumb {
+  width: 240px;
+  height: 144px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.thumb-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.popular-section {
+  margin-top: 60px;
+}
+
+.popular-header {
+  margin-left: 150px;
+}
+
+.popular-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 56px;
+  margin: 10px 140px 0 140px;
+}

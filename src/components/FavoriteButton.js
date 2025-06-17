@@ -1,5 +1,5 @@
 import { useFavorites } from "../contexts/FavoritesContext";
-import "./FavoriteButton.css";
+import "../styles/components/FavoriteButton.css";
 
 export default function FavoriteButton({ movie }) {
   const { id } = movie;
@@ -14,8 +14,7 @@ export default function FavoriteButton({ movie }) {
     <button
       onClick={handleClick}
       className={`favorite-button ${isFavorite(id) ? "active" : ""}`}
-      aria-label={isFavorite(id) ? "Remove from favorites" : "Add to favorites"}
-    >
+      aria-label={isFavorite(id) ? "Remove from favorites" : "Add to favorites"}>
       {isFavorite(id) ? "❤️" : "🤍"}
     </button>
   );
