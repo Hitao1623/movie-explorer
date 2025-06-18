@@ -1,0 +1,69 @@
+.search-container {
+  margin-top: 10px;
+  margin-left: 180px;
+  margin-right: 100px;
+  padding-bottom: 60px;
+}
+
+.search-header {
+  margin-bottom: 20px;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+}
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+}
+
+.celeb-card {
+  margin: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.celeb-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.celeb-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.search-pagination {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.sort-buttons {
+  margin-bottom: 20px;
+}
+
+.sort-buttons button {
+  background-color: #0b3994;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sort-buttons button:hover {
+  background-color: #1359c2;
+}
+
+.sort-buttons button.active {
+  background-color: #1a65d8;
+}
