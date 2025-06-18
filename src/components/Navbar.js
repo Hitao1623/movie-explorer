@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/components/Navbar.css";
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 // Define Navbar component
 export default function Navbar() {
@@ -18,6 +19,8 @@ export default function Navbar() {
 
   // TMDB API key (used to call genre API)
   const API_KEY = "dcb6a2332e848860ad8bc86b5ece16bb";
+
+  const { user, logout } = useAuth();
 
   // Effect: when category changes to "genres", fetch the genre list
   useEffect(() => {
@@ -102,8 +105,21 @@ export default function Navbar() {
 
       {/* Right Section: Navigation Links (Register / Login / Favorites) */}
       <div className="navbar-right">
-        <Link to="/register">Register</Link>
-        <Link to="/login">Login</Link>
+
+        {user ? (
+          <>
+            <span style={{ marginRight: "1rem" }}>Welcome, {user.username}</span>
+            <button onClick={() => logout()} style={{ cursor: "pointer" }}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
+          </>
+        )}
+
         <Link to="/favorites">Favorites</Link>
       </div>
     </nav>
