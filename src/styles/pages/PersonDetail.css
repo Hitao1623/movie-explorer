@@ -1,0 +1,74 @@
+.person-detail-container {
+  margin: 0 180px;
+  color: #fff;
+}
+
+.person-header {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.person-image {
+  width: 300px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  object-fit: cover;
+}
+
+.person-info h1 {
+  margin-top: 2px;
+}
+
+.person-biography {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.known-for-list {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+}
+
+.known-for-card {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  width: 150px;
+}
+
+.known-for-card img {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.known-for-card img:hover {
+  transform: scale(1.05);
+}
+
+.known-for-card p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.back-button {
+  background-color: #0f3b93;
+  color: #fff;
+  border: none;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 40px;
+  margin-top: 0;
+}
+
+.back-button:hover {
+  background-color: #0d347f;
+}

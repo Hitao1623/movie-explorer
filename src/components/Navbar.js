@@ -51,7 +51,13 @@ export default function Navbar() {
     <nav className="navbar">
       {/* Left Section: Logo */}
       <div className="navbar-left">
-        <Link to="/" className="logo">
+        <Link
+          to="/"
+          className="logo"
+          onClick={() => {
+            setQuery("");
+            setCategory("all");
+          }}>
           Movie Explorer
         </Link>
       </div>

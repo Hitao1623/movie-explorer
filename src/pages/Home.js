@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
 import { useLocation } from "react-router-dom";
-import "../styles/Home.css";
+import "../styles/pages/Home.css";
 
 export default function Home() {
   // State: store "Now Playing" movies (array of movie objects)
