@@ -4,51 +4,54 @@ import { useLocation } from "react-router-dom";
 import "../styles/Home.css";
 
 export default function Home() {
-  // State to store now playing movies
+  // State: store "Now Playing" movies (array of movie objects)
   const [nowPlaying, setNowPlaying] = useState([]);
 
-  // State to store popular movies
+  // State: store "Popular Movies" (array of movie objects)
   const [popularMovies, setPopularMovies] = useState([]);
 
-  // State to store trailer video URLs mapped by movie ID
+  // State: store { movieId: youtube trailer url } map
   const [trailers, setTrailers] = useState({});
 
-  // Index of the currently focused movie in nowPlaying
+  // State: index of currently selected movie in Now Playing list
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Store IDs of movies that have been triggered for playback
+  // State: list of movie ids which are currently playing (used to toggle iframe)
   const [playingVideoIds, setPlayingVideoIds] = useState([]);
 
   // TMDB API key
   const API_KEY = "dcb6a2332e848860ad8bc86b5ece16bb";
 
-  // Get current search query from URL
+  // Get current search query from URL params
   const location = useLocation();
   const searchTerm = new URLSearchParams(location.search).get("query") || "";
 
-  // Fetch now playing movies and their trailers
+  // Fetch "Now Playing" movies and their trailers (runs on page load)
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}`)
       .then((res) => res.json())
       .then(async (data) => {
-        const movies = data.results.slice(0, 10);
+        const movies = data.results.slice(0, 10); // Only take top 10 movies
         setNowPlaying(movies);
 
+        // For each movie, fetch its trailer link
         const trailerData = {};
         await Promise.all(
           movies.map(async (movie) => {
             const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`);
             const videoData = await res.json();
+            // Find Youtube "Trailer" type video
             const trailer = videoData.results.find((v) => v.type === "Trailer" && v.site === "YouTube");
             if (trailer) trailerData[movie.id] = `https://www.youtube.com/embed/${trailer.key}`;
           })
         );
 
+        // Save trailers map into state
         setTrailers(trailerData);
       });
   }, []);
 
-  // Fetch popular movies or search results depending on search term
+  // Fetch "Popular Movies" or search results when searchTerm changes
   useEffect(() => {
     const url =
       searchTerm.trim() ?
@@ -57,49 +60,54 @@ export default function Home() {
 
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setPopularMovies(data.results.slice(0, 20)));
+      .then((data) => setPopularMovies(data.results.slice(0, 20))); // Top 20 popular movies
   }, [searchTerm]);
 
-  // Play button triggers loading iframe for a specific movie ID
+  // Handler: when user clicks Play on a movie -> mark this movieId as playing
   const handlePlay = (id) => setPlayingVideoIds((prev) => [...prev, id]);
 
-  // Go to previous movie (loop around)
+  // Handler: go to previous movie in carousel (circular)
   const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? nowPlaying.length - 1 : prev - 1));
 
-  // Go to next movie (loop around)
+  // Handler: go to next movie in carousel (circular)
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % nowPlaying.length);
 
   return (
     <div className="home-container">
-      {/* Now Showing Section */}
+      {/* Section 1: NOW SHOWING carousel */}
       <section>
         <h2 className="now-showing-header">Now Showing</h2>
 
+        {/* Only render when data is ready */}
         {nowPlaying.length > 0 && (
           <div className="video-section">
-            {/* Main (center) video */}
+            {/* Center Main Video */}
             <div className="main-video-container">
-              {trailers[nowPlaying[currentIndex].id] && playingVideoIds.includes(nowPlaying[currentIndex].id) ?
-                <iframe
-                  className="main-video"
-                  src={trailers[nowPlaying[currentIndex].id]}
-                  title={nowPlaying[currentIndex].title}
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                />
-              : <div style={{ position: "relative" }}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w780${nowPlaying[currentIndex].backdrop_path || nowPlaying[currentIndex].poster_path}`}
-                    alt={nowPlaying[currentIndex].title}
-                    className="main-video-fallback"
+              {
+                // If this movie was played -> show iframe (Youtube player)
+                trailers[nowPlaying[currentIndex].id] && playingVideoIds.includes(nowPlaying[currentIndex].id) ?
+                  <iframe
+                    className="main-video"
+                    src={trailers[nowPlaying[currentIndex].id]}
+                    title={nowPlaying[currentIndex].title}
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
                   />
-                  <button className="play-button" onClick={() => handlePlay(nowPlaying[currentIndex].id)}>
-                    ▶
-                  </button>
-                </div>
+                  // Else show image fallback + Play button
+                : <div style={{ position: "relative" }}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w780${nowPlaying[currentIndex].backdrop_path || nowPlaying[currentIndex].poster_path}`}
+                      alt={nowPlaying[currentIndex].title}
+                      className="main-video-fallback"
+                    />
+                    <button className="play-button" onClick={() => handlePlay(nowPlaying[currentIndex].id)}>
+                      ▶
+                    </button>
+                  </div>
+
               }
 
-              {/* Navigation buttons */}
+              {/* Navigation Arrows */}
               <button onClick={prevSlide} className="nav-btn left">
                 &#10094;
               </button>
@@ -107,18 +115,18 @@ export default function Home() {
                 &#10095;
               </button>
 
-              {/* Score */}
+              {/* Movie Rating */}
               <div className="score-badge">
                 <span style={{ color: "#f5c518", marginRight: "4px" }}>★</span>
                 {(nowPlaying[currentIndex].vote_average || 0).toFixed(1)}
               </div>
 
-              {/* Title & Release Date */}
+              {/* Movie Title and Release Date */}
               <div className="video-title">{nowPlaying[currentIndex].title}</div>
               <div className="video-date">{nowPlaying[currentIndex].release_date}</div>
             </div>
 
-            {/* Right-side thumbnails (3 previews) */}
+            {/* Right side - 3 preview thumbnails */}
             <div className="side-thumbnails">
               {[1, 2, 3].map((offset) => {
                 const index = (currentIndex + offset) % nowPlaying.length;
@@ -137,12 +145,14 @@ export default function Home() {
         )}
       </section>
 
-      {/* Popular Movies Section */}
+      {/* Section 2: POPULAR MOVIES horizontal scroll */}
       <section className="popular-section">
         <h2 className="popular-header">Popular Movies</h2>
+
         <div className="popular-scroll">
           {popularMovies.map((movie) => (
             <div key={movie.id} style={{ minWidth: "160px" }}>
+              {/* Reuse MovieCard component */}
               <MovieCard movie={movie} />
             </div>
           ))}

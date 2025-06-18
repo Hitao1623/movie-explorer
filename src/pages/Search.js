@@ -1,8 +1,5 @@
-// Import React hooks and React Router hooks
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-// Import reusable MovieCard component and Pagination component
 import MovieCard from "../components/MovieCard";
 import Pagination from "../components/Pagination";
 import "../styles/Search.css";
