@@ -1,6 +1,7 @@
 body {
   background-color: #202940;
   color: #fff;
+  font-family: "Montserrat", sans-serif;
 }
 
 .home-container {
@@ -11,7 +12,8 @@ body {
 .now-showing-header {
   margin-left: 150px;
   margin-bottom: 30px;
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .video-section {
@@ -117,15 +119,16 @@ body {
 .video-title {
   text-align: center;
   margin-top: 16px;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
 }
 
 .video-date {
   text-align: center;
-  margin-top: 6px;
-  font-size: 16px;
+  margin-top: 8px;
+  font-size: 15px;
   color: #d7d4d4;
+  font-weight: 500;
 }
 
 .side-thumbnails {
@@ -166,7 +169,8 @@ body {
 
 .popular-header {
   margin-left: 150px;
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .popular-scroll {
@@ -176,4 +180,5 @@ body {
   margin: 10px 140px 0 140px;
   border-radius: 8px;
   background-color: #fff;
+  font-weight: 500;
 }
