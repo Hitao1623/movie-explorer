@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
@@ -8,6 +9,8 @@ export default function Navbar() {
   const [genres, setGenres] = useState([]);
   const navigate = useNavigate();
   const API_KEY = "dcb6a2332e848860ad8bc86b5ece16bb";
+
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (category === "genres") {
@@ -65,9 +68,24 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-right">
-        <Link to="/register">Register</Link>
+        {/* <Link to="/register">Register</Link>
         <Link to="/login">Login</Link>
+        <Link to="/favorites">Favorites</Link> */}
         <Link to="/favorites">Favorites</Link>
+
+        {user ? (
+          <>
+            <span style={{ marginRight: "1rem" }}>Welcome, {user.username}</span>
+            <button onClick={() => logout()} style={{ cursor: "pointer" }}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
+          </>
+        )}
       </div>
     </nav>
   );
