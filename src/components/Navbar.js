@@ -22,8 +22,6 @@ export default function Navbar() {
 
   const { user, logout } = useAuth();
 
-  const { user, logout } = useAuth();
-
   // Effect: when category changes to "genres", fetch the genre list
   useEffect(() => {
     if (category === "genres") {
