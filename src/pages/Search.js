@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 // Import reusable MovieCard component and Pagination component
 import MovieCard from "../components/MovieCard";
 import Pagination from "../components/Pagination";
+import "../styles/Search.css";
 
 export default function Search() {
   // TMDB API Key
@@ -110,9 +111,9 @@ export default function Search() {
 
   // Render component
   return (
-    <div style={{ marginTop: "10px", marginLeft: "180px", marginRight: "100px", paddingBottom: "60px" }}>
+    <div className="search-container">
       {/* Header: show total results */}
-      <h2>
+      <h2 className="search-header">
         {totalResults.toLocaleString()} Results for "{category === "genres" ? getGenreNameById(query) : query}"
       </h2>
 
@@ -126,26 +127,29 @@ export default function Search() {
       {results.length === 0 && !loading && <p>No results found.</p>}
 
       {/* Display results */}
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="search-results">
         {
           category === "celebs" ?
             // Render celeb cards
-            results.map((person) => (
-              <div key={person.id} style={{ margin: "10px", width: "160px", textAlign: "center" }}>
-                {/* Celeb image */}
-                <img src={`https://image.tmdb.org/t/p/w200${person.profile_path}`} alt={person.name} style={{ width: "100%", borderRadius: "8px" }} />
-                <p>{person.name}</p>
-              </div>
-            ))
+            results.map((person) => {
+              // NEW: fallback image if no profile_path
+              const imageUrl = person.profile_path ? `https://image.tmdb.org/t/p/w200${person.profile_path}` : "/default-poster.jpg";
+
+              return (
+                <div key={person.id} className="celeb-card">
+                  {/* Celeb image (with fallback) */}
+                  <img src={imageUrl} alt={person.name} className="celeb-image" />
+                  <p>{person.name}</p>
+                </div>
+              );
+            })
             // Render movie cards (use reusable MovieCard component)
           : results.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         }
       </div>
 
       {/* Pagination */}
-      <div style={{ marginTop: "30px", textAlign: "center" }}>
-        {totalPages > 1 && <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />}
-      </div>
+      <div className="search-pagination">{totalPages > 1 && <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />}</div>
     </div>
   );
 }
