@@ -27,6 +27,9 @@ export default function Search() {
   // State for genre list (used when searching by genre)
   const [genreList, setGenreList] = useState([]);
 
+  // State for sort option (NEW)
+  const [sortBy, setSortBy] = useState("popularity.desc"); // default sort
+
   // Number of results per page (TMDB default is 20)
   const RESULTS_PER_PAGE = 20;
 
@@ -52,7 +55,7 @@ export default function Search() {
     }
   }, [category]);
 
-  // Effect 2: fetch search results when query / category / page change
+  // Effect 2: fetch search results when query / category / page / sortBy change
   useEffect(() => {
     // If query is empty (for "titles" or "celebs"), do not search
     if (!query.trim() && category !== "genres") return;
@@ -74,8 +77,8 @@ export default function Search() {
           // Search people (actors/celebs)
           url = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&query=${query}&page=${page}`;
         } else if (category === "genres") {
-          // Discover movies by genre
-          url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${query}&page=${page}`;
+          // Discover movies by genre (with sort option)
+          url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${query}&page=${page}&sort_by=${sortBy}`;
         }
 
         // Fetch data from API
@@ -96,7 +99,7 @@ export default function Search() {
 
     // Run fetchData
     fetchData();
-  }, [query, category, page]);
+  }, [query, category, page, sortBy]);
 
   // Calculate total pages
   const totalPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
@@ -113,6 +116,21 @@ export default function Search() {
       <h2 className="search-header">
         {totalResults.toLocaleString()} Results for "{category === "genres" ? getGenreNameById(query) : query}"
       </h2>
+
+      {/* NEW: Show sort buttons when searching by genre */}
+      {category === "genres" && (
+        <div className="sort-buttons">
+          <button className={sortBy === "popularity.desc" ? "active" : ""} onClick={() => setSortBy("popularity.desc")}>
+            Sort by Popularity
+          </button>
+          <button className={sortBy === "vote_average.desc" ? "active" : ""} onClick={() => setSortBy("vote_average.desc")}>
+            Sort by Rating
+          </button>
+          <button className={sortBy === "release_date.desc" ? "active" : ""} onClick={() => setSortBy("release_date.desc")}>
+            Sort by Release Date
+          </button>
+        </div>
+      )}
 
       {/* Show loading state */}
       {loading && <p>Loading...</p>}

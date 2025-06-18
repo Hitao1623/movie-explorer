@@ -42,3 +42,28 @@
   margin-top: 30px;
   text-align: center;
 }
+
+.sort-buttons {
+  margin-bottom: 20px;
+}
+
+.sort-buttons button {
+  background-color: #0b3994;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sort-buttons button:hover {
+  background-color: #1359c2;
+}
+
+.sort-buttons button.active {
+  background-color: #1a65d8;
+}

@@ -49,8 +49,11 @@ export default function MovieCard({ movie }) {
           <h4 className="movie-title">{title}</h4>
         </Link>
 
-        {/* Release date text */}
-        <p className="movie-release">{release_date}</p>
+        {/* Release date text with label */}
+        <div className="movie-release">
+          <div className="release-label">Release Date:</div>
+          <div className="release-date">{release_date || "Unknown"}</div>
+        </div>
       </div>
     </div>
   );
