@@ -9,11 +9,11 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      login(username, password);
+      await login(username, password);
       navigate("/favorites");
     } catch (err) {
       setError(err.message);

@@ -12,42 +12,61 @@ export function AuthProvider({ children }) {
 
   // Load user from localStorage when app starts
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
   
-  const register = (username, password) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    if (users.find((u) => u.username === username)) {
+  const API_URL = "http://localhost:3001";
+
+  const hashPassword = (password) => {
+    return CryptoJS.SHA256(password).toString();
+  };
+
+  const register = async (username, email, password) => {
+
+    // check if username already exists
+    const res = await fetch(`${API_URL}/users?username=${username}`);
+    const existingUser = await res.json();
+
+    if (existingUser.length > 0) {
       throw new Error("Username already exists");
     }
 
     // Hash the password before storing
-    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    const hashedPassword = hashPassword(password);
 
-    users.push({ username, password: hashedPassword });
-    localStorage.setItem("users", JSON.stringify(users));
+    // create new user
+    const newUser = { username, email, password: hashedPassword };
+    await fetch(`${API_URL}/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    });
   };
 
-  const login = (username, password) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const login = async (username, password) => {
+    // 1. Fetch user by username
+    const res = await fetch(`${API_URL}/users?username=${username}`);
+    const users = await res.json();
 
-    // Hash the input password for comparison (with same method as registration)
-    const hashedInputPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    if (users.length === 0) {
+      throw new Error("User not found");
+    }
 
-    //Find user by username and compare hashed passwords
-    const foundUser = users.find(
-      (u) => u.username === username && u.password === hashedInputPassword
-    );
-    
-    if (!foundUser) throw new Error("Invalid username or password");
+    // 2. Hash input password and compare locally
+    const hashedAttempt = hashPassword(password);
+    const user = users[0];
 
-    // Store user data (without password) in localStorage
-    const { password: _, ...userData } = foundUser;   // Remove password from stored user object
+    if (user.password !== hashedAttempt) {
+      throw new Error("Invalid password");
+    }
+
+    // 3. Store user session (without password)
+    const { password: _, ...userData } = user; // Remove password
+    localStorage.setItem("currentUser", JSON.stringify(userData));
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {

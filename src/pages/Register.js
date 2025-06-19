@@ -11,7 +11,7 @@ export default function Register() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
@@ -29,7 +29,7 @@ export default function Register() {
         }
         
         try {
-        register(username, password);
+        await register(username, email, password);
         navigate("/Login");
         } catch (err) {
         setError(err.message);
