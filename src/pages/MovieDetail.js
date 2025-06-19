@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton";
+import { Link } from "react-router-dom";
+import "../styles/pages/MovieDetail.css"
 
 // MovieDetail component fetches and displays detailed info for a single movie
 export default function MovieDetail() {
@@ -9,6 +11,7 @@ export default function MovieDetail() {
 
   // State for storing movie data, loading state, and errors
   const [movie, setMovie] = useState(null);
+  const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,6 +27,12 @@ export default function MovieDetail() {
         }
         const data = await res.json();
         setMovie(data); // Update state with movie data
+
+      // Fetch cast info
+      const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`);
+      const creditsData = await creditsRes.json();
+      setCast(creditsData.cast.slice(0, 20)); // Top 20 cast members
+
       } catch (err) {
         console.error("Load failed", err);
         setError("Failed to load movie."); // Set error state if fetch fails
@@ -61,8 +70,8 @@ export default function MovieDetail() {
   return (
     <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
       {/* Back button to navigate to previous page */}
-      <button onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
-        Back
+      <button className = "back-button" onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
+        ← Back
       </button>
 
       {/* Movie title and tagline */}
@@ -101,7 +110,29 @@ export default function MovieDetail() {
 
       {/* Movie overview/summary */}
       <p style={{ marginTop: "10px" }}>{overview}</p>
+
+      {/* Movie cast */}
+      <h3 style={{ marginTop: "30px" }}>Cast</h3>
+        <div className="cast-scroll-container">
+          {cast
+            .filter((actor) => actor.profile_path)
+            .slice(0, 10)
+            .map((actor) => (
+              <Link
+                to={`/person/${actor.id}`}
+                key={actor.id}
+                className="cast-card"
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                  alt={actor.name}
+                />
+                <p>{actor.name}</p>
+              </Link>
+            ))}
+        </div>
     </div>
+
   );
 }
 

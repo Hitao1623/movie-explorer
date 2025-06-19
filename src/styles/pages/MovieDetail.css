@@ -1,0 +1,44 @@
+.cast-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 40px;
+  margin: 10px 0;
+  padding: 20px 20px 10px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  color: black;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 20px;
+}
+
+.cast-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.cast-card {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 92px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.cast-card img {
+  width: 92px;
+  height: 138px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.cast-card img:hover {
+  transform: scale(1.05);
+}
+
+.cast-card p {
+  font-size: 14px;
+  margin-top: 5px;
+  white-space: normal;
+}
