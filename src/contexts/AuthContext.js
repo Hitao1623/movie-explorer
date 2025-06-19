@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import CryptoJS from "crypto-js"; 
 
+  
+const API_URL = "http://localhost:3001";
+
 export const AuthContext = createContext();
 
 export function useAuth() {
@@ -17,8 +20,6 @@ export function AuthProvider({ children }) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-  
-  const API_URL = "http://localhost:3001";
 
   const hashPassword = (password) => {
     return CryptoJS.SHA256(password).toString();

@@ -65,3 +65,25 @@ To do today:
 -> implement favorite toggling functionality
 Any block/help:	
 -> none
+
+--2025.06.18 Amir--
+
+Done yesterday : 	
+-> completed register page layout
+-> fixed Navbar Authentication Flow
+To do today: 	
+-> improve authentication system (hashing PW, data storage...)
+-> implement persistent favorites storage (Json)
+Any block/help:	
+-> none yet
+
+--2025.06.17 Amir--
+
+Done yesterday : 	
+-> created Favorites & FavoritesContext
+-> implemented favorite toggling functionality
+To do today: 	
+-> work on Navbar at logging
+-> complete register page layout
+Any block/help:	
+-> none yet
