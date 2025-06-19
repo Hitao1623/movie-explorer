@@ -2,55 +2,64 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton";
 import { Link } from "react-router-dom";
-import "../styles/pages/MovieDetail.css"
+import "../styles/pages/MovieDetail.css";
 
-// MovieDetail component fetches and displays detailed info for a single movie
 export default function MovieDetail() {
-  const { id } = useParams(); // Get the movie ID from the URL
-  const navigate = useNavigate(); // Allows going back to the previous page
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  // State for storing movie data, loading state, and errors
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
+  const [trailerUrl, setTrailerUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_KEY = "dcb6a2332e848860ad8bc86b5ece16bb"; // TMDB API key
+  const API_KEY = "dcb6a2332e848860ad8bc86b5ece16bb";
 
-  // Fetch movie data from TMDB API when component mounts or ID changes
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
-        if (!res.ok) {
-          throw new Error("Movie not found.");
-        }
+        // Fetch main movie data
+        const res = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+        );
+        if (!res.ok) throw new Error("Movie not found.");
         const data = await res.json();
-        setMovie(data); // Update state with movie data
+        setMovie(data);
 
-      // Fetch cast info
-      const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`);
-      const creditsData = await creditsRes.json();
-      setCast(creditsData.cast.slice(0, 20)); // Top 20 cast members
+        // Fetch cast data (top 20)
+        const creditsRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`
+        );
+        const creditsData = await creditsRes.json();
+        setCast(creditsData.cast.slice(0, 20));
 
+        // Fetch trailer video (YouTube, type "Trailer")
+        const videoRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
+        );
+        const videoData = await videoRes.json();
+        const trailer = videoData.results.find(
+          (v) => v.type === "Trailer" && v.site === "YouTube"
+        );
+        if (trailer) {
+          setTrailerUrl(`https://www.youtube.com/embed/${trailer.key}`);
+        }
       } catch (err) {
-        console.error("Load failed", err);
-        setError("Failed to load movie."); // Set error state if fetch fails
+        console.error(err);
+        setError("Failed to load movie.");
       } finally {
-        setLoading(false); // Stop loading spinner
+        setLoading(false);
       }
     };
 
     fetchMovie();
-  }, [id]); // Re-run fetch if ID changes
+  }, [id]);
 
-
-  // Conditional rendering for loading, error, or missing movie
   if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (error) return <p className="error">{error}</p>;
   if (!movie) return null;
 
-  // Destructure needed properties from the movie object
   const {
     title,
     poster_path,
@@ -62,81 +71,79 @@ export default function MovieDetail() {
     tagline,
   } = movie;
 
-  // Fallback for missing poster image
   const imageUrl = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : "/default-poster.jpg";
 
   return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      {/* Back button to navigate to previous page */}
-      <button className = "back-button" onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
+    <div className="movie-detail-container">
+      <button className="movie-detail-back" onClick={() => navigate(-1)}>
         ← Back
       </button>
 
-      {/* Movie title and tagline */}
-      <h2 style={{ fontSize: "2rem", marginBottom: "10px" }}>{title}</h2>
-      {tagline && (
-        <p style={{ fontStyle: "italic", color: "#777", marginBottom: "10px" }}>
-          {tagline}
-        </p>
-      )}
+      <h2 className="movie-detail-title">{title}</h2>
+      {tagline && <p className="movie-detail-tagline">{tagline}</p>}
 
-      {/* Movie poster with FavoriteButton in top-right corner */}
-      <div style={{ position: "relative", width: "300px", marginBottom: "20px" }}>
-        <img
-          src={imageUrl}
-          alt={`Poster for ${title}`}
-          style={{ width: "100%", borderRadius: "10px" }}
-        />
-        <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-          <FavoriteButton movie={movie} />
+      {/* Poster and Trailer side by side */}
+      <div className="movie-detail-media">
+        <div className="movie-detail-poster-wrapper">
+          <img
+            src={imageUrl}
+            alt={`Poster for ${title}`}
+            className="movie-detail-poster"
+          />
+          <div className="favorite-button-wrapper">
+            <FavoriteButton movie={movie} />
+          </div>
         </div>
+
+        {trailerUrl && (
+          <iframe
+            className="movie-detail-trailer"
+            src={trailerUrl}
+            title={`Trailer for ${title}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        )}
       </div>
 
-      {/* Movie info section */}
-      <p>
-        <strong>Release Date:</strong> {release_date}
-      </p>
-      <p>
-        <strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}
-      </p>
-      <p>
-        <strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}
-      </p>
-      <p>
-        <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
-      </p>
+      <div className="movie-detail-info">
+        <p>
+          <strong>Release Date:</strong> {release_date}
+        </p>
+        <p>
+          <strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}
+        </p>
+        <p>
+          <strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}
+        </p>
+        <p>
+          <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
+        </p>
 
-      {/* Movie overview/summary */}
-      <p style={{ marginTop: "10px" }}>{overview}</p>
+        <p className="movie-detail-overview">{overview}</p>
+      </div>
 
-      {/* Movie cast */}
-      <h3 style={{ marginTop: "30px" }}>Cast</h3>
-        <div className="cast-scroll-container">
-          {cast
-            .filter((actor) => actor.profile_path)
-            .slice(0, 10)
-            .map((actor) => (
-              <Link
-                to={`/person/${actor.id}`}
-                key={actor.id}
-                className="cast-card"
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                  alt={actor.name}
-                />
-                <p>{actor.name}</p>
-              </Link>
-            ))}
-        </div>
+      <h3 className="movie-detail-cast-heading">Cast</h3>
+      <div className="movie-detail-cast-scroll">
+        {cast
+          .filter((actor) => actor.profile_path)
+          .slice(0, 10)
+          .map((actor) => (
+            <Link
+              to={`/person/${actor.id}`}
+              key={actor.id}
+              className="movie-detail-cast-card"
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                alt={actor.name}
+              />
+              <p>{actor.name}</p>
+            </Link>
+          ))}
+      </div>
     </div>
-
   );
 }
-
-// TODO: call the cast members of the movie from the API
-// TODO: call photos of the movie from the API
-// TODO: rating system that interacts with the vote average from API
-
