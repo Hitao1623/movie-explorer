@@ -1,0 +1,144 @@
+.movie-detail-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+.movie-detail-back {
+  background-color: #fff;
+  color: black;
+  border: none;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 40px;
+  margin-top: 0;
+}
+
+.movie-detail-back:hover {
+  background-color: #cdd3de;
+}
+
+.movie-detail-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.movie-detail-tagline {
+  font-style: italic;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.movie-detail-media {
+  display: flex;
+  gap: 100px; 
+  margin-bottom: 30px;
+  justify-content: flex-start; 
+  align-items: flex-start;
+}
+
+.movie-detail-poster-wrapper {
+  position: relative;
+  width: 300px;
+  flex-shrink: 0;
+  
+}
+
+.movie-detail-trailer {
+  width: 460px;
+  height: 300px;
+  border: none;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+
+.movie-detail-poster {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.favorite-button-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.movie-detail-info p {
+  margin-bottom: 8px;
+}
+
+.movie-detail-overview {
+  margin-top: 12px;
+}
+
+.movie-detail-cast-heading {
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+.movie-detail-cast-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
+}
+
+.movie-detail-cast-card {
+  flex: 0 0 auto;
+  width: 92px;
+  scroll-snap-align: start;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+}
+
+.movie-detail-cast-card img {
+  width: 92px;
+  height: 138px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.movie-detail-cast-card img:hover {
+  transform: scale(1.05);
+}
+
+.movie-detail-cast-card p {
+  font-size: 14px;
+  margin-top: 5px;
+  white-space: normal;
+}
+
+.error {
+  color: red;
+}
+
+/* large screens */
+@media (min-width: 1200px) {
+  .movie-detail-trailer {
+    width: 700px;
+    height: 420px;
+  }
+}
+
+/* small screens */
+@media (max-width: 800px) {
+  .movie-detail-media {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-detail-poster-wrapper,
+  .movie-detail-trailer {
+    width: 90%;
+    max-width: 460px;
+  }
+}

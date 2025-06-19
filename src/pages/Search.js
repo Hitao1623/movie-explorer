@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import Pagination from "../components/Pagination";
-import "../styles/Search.css";
+import "../styles/pages/Search.css";
+import { Link } from "react-router-dom";
 
 export default function Search() {
   // TMDB API Key
@@ -153,8 +154,14 @@ export default function Search() {
               return (
                 <div key={person.id} className="celeb-card">
                   {/* Celeb image (with fallback) */}
-                  <img src={imageUrl} alt={person.name} className="celeb-image" />
-                  <p>{person.name}</p>
+                  <Link to={`/person/${person.id}`}>
+                    <img src={imageUrl} alt={person.name} className="celeb-image" />
+                  </Link>
+                  <p>
+                    <Link to={`/person/${person.id}`} className="celeb-name-link">
+                      {person.name}
+                    </Link>
+                  </p>
                 </div>
               );
             })

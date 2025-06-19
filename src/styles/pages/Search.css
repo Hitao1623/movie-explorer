@@ -1,7 +1,7 @@
 .search-container {
   margin-top: 10px;
   margin-left: 180px;
-  margin-right: 100px;
+  margin-right: 180px;
   padding-bottom: 60px;
 }
 
@@ -21,6 +21,7 @@
   margin: 10px;
   width: 200px;
   text-align: center;
+  color: black;
 }
 
 .celeb-image {
@@ -36,6 +37,15 @@
 .celeb-image:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.celeb-name-link {
+  text-decoration: none;
+  color: black;
+}
+
+.celeb-name-link:hover {
+  color: #1da1f2;
 }
 
 .search-pagination {
