@@ -10,9 +10,6 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  const hashedPassword = CryptoJS.SHA256("password").toString();
-
-
   // Load user from localStorage when app starts
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,12 +17,16 @@ export function AuthProvider({ children }) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-
+  
   const register = (username, password) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     if (users.find((u) => u.username === username)) {
       throw new Error("Username already exists");
     }
+
+    // Hash the password before storing
+    const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+
     users.push({ username, password: hashedPassword });
     localStorage.setItem("users", JSON.stringify(users));
   };
@@ -33,8 +34,8 @@ export function AuthProvider({ children }) {
   const login = (username, password) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    // Hash the input password for comparison
-    const hashedInputPassword = CryptoJS.SHA1256(password).toString();
+    // Hash the input password for comparison (with same method as registration)
+    const hashedInputPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 
     //Find user by username and compare hashed passwords
     const foundUser = users.find(

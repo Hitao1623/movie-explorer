@@ -30,7 +30,7 @@ export default function Register() {
         
         try {
         register(username, password);
-        navigate("/");
+        navigate("/Login");
         } catch (err) {
         setError(err.message);
         }
