@@ -34,7 +34,7 @@ export default function MovieDetail() {
         const creditsData = await creditsRes.json();
         setCast(creditsData.cast.slice(0, 20));
 
-        // Fetch trailer video (YouTube, type "Trailer")
+        // Fetch trailer video 
         const videoRes = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
         );
@@ -84,7 +84,6 @@ export default function MovieDetail() {
       <h2 className="movie-detail-title">{title}</h2>
       {tagline && <p className="movie-detail-tagline">{tagline}</p>}
 
-      {/* Poster and Trailer side by side */}
       <div className="movie-detail-media">
         <div className="movie-detail-poster-wrapper">
           <img
@@ -121,6 +120,7 @@ export default function MovieDetail() {
         <p>
           <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
         </p>
+        <br></br>
 
         <p className="movie-detail-overview">{overview}</p>
       </div>
@@ -129,7 +129,7 @@ export default function MovieDetail() {
       <div className="movie-detail-cast-scroll">
         {cast
           .filter((actor) => actor.profile_path)
-          .slice(0, 10)
+          .slice(0, 20)
           .map((actor) => (
             <Link
               to={`/person/${actor.id}`}
