@@ -1,0 +1,210 @@
+/* Base styles for both forms */
+
+.Auth-container *,
+.Auth-container *::before,
+.Auth-container *::after {
+  box-sizing: border-box; /* Include padding/border in width */
+}
+
+.Auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 0px;
+}
+.Auth-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px 50px;
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.3s ease;
+}
+.Auth-card:hover {
+  transform: translateY(-5px);
+}
+.Auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.Auth-header h1 {
+  font-size: 28px;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.Auth-header p {
+  color: #718096;
+  font-size: 16px;
+}
+
+/* Form Styles */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0aec0;
+}
+input {
+  width: 100%;
+  padding: 14px 14px 14px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Button Styles */
+.formButton {
+  width: 100%;
+  padding: 14px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.formButton:hover {
+  background: #4338ca;
+}
+.formButton:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+.button-icon {
+  margin-left: 8px;
+}
+
+/* Link Styles */
+.forgot-password {
+  text-align: right;
+  margin: 5px 0 20px;
+}
+.forgot-password a {
+  color: #4362eb;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.forgot-password a:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+.Auth-link {
+  text-align: right;
+  font-size: 13px;
+  margin-top: 20px;
+  color: #718096;
+}
+.Auth-link a {
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.Auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+  color: #e53e3e;
+  background: #fff5f5;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Register-specific overrides */
+/* Social Login Styles */
+.social-login {
+  margin: 25px 0;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  color: #718096;
+  font-size: 14px;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider::before {
+  margin-right: 10px;
+}
+
+.divider::after {
+  margin-left: 10px;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.social-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.social-buttons button:hover {
+  background: #f7fafc;
+}
+
+.google-btn {
+  color: #4a5568;
+}
+
+.facebook-btn {
+  color: #3b5998;
+  border-color: #3b5998 !important;
+}
+
+.social-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.info-message {
+  padding: 15px;
+  background: #e3f2fd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: #1976d2;
+}
