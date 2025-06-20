@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/components/Navbar.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { FiLogOut } from "react-icons/fi";
 
 // Define Navbar component
 export default function Navbar() {
@@ -108,19 +109,23 @@ export default function Navbar() {
 
         {user ? (
           <>
-            <span style={{ marginRight: "1rem" }}>Welcome, {user.username}</span>
-            <button onClick={() => logout()} style={{ cursor: "pointer" }}>
-              Logout
+            <span className="welcome-message">Welcome, {user.username}</span>
+            <Link to="/favorites">Favorites</Link>
+            <button onClick={() => logout()}
+              className="logout-button"
+              aria-label="Logout"
+              title="Logout" 
+            >
+              <FiLogOut />
             </button>
           </>
         ) : (
           <>
             <Link to="/register">Register</Link>
             <Link to="/login">Login</Link>
+            <Link to="/favorites">Favorites</Link>
           </>
         )}
-
-        <Link to="/favorites">Favorites</Link>
       </div>
     </nav>
   );
