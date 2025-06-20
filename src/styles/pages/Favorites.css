@@ -1,0 +1,105 @@
+.favorites-page-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.home-button-container {
+  position: absolute;
+  left: 5rem;
+  z-index: 10;
+}
+
+.favorites-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.favorites-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  padding-top: 3rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.favorites-title {
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+  color: #0b3994;
+}
+
+.favorites-list {
+  list-style: none;
+  padding: 0;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #e4eef7;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+.favorite-poster {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 2rem;
+  border-radius: 4px;
+}
+
+.favorite-details {
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.remove-button {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 8px;
+  background: #e27681;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background: #c82333;
+}
+
+/* Home Button Styles */
+.home-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #0b3994;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.home-button:hover {
+  background-color: #092b7a;
+  transform: translateY(-1px);
+}
+
+.home-icon {
+  font-size: 1.5rem;
+}
