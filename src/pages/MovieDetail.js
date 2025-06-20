@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import FavoriteButton from "../components/FavoriteButton";
-import { Link } from "react-router-dom";
 import "../styles/pages/MovieDetail.css";
 
 export default function MovieDetail() {
@@ -9,6 +8,7 @@ export default function MovieDetail() {
   const navigate = useNavigate();
 
   const [movie, setMovie] = useState(null);
+  const [director, setDirector] = useState(null);
   const [cast, setCast] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,6 @@ export default function MovieDetail() {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        // Fetch main movie data
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
         );
@@ -27,14 +26,19 @@ export default function MovieDetail() {
         const data = await res.json();
         setMovie(data);
 
-        // Fetch cast data (top 20)
+        // Fetch cast and crew
         const creditsRes = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`
         );
         const creditsData = await creditsRes.json();
         setCast(creditsData.cast.slice(0, 20));
 
-        // Fetch trailer video 
+        const directorData = creditsData.crew.find(
+          (member) => member.job === "Director"
+        );
+        setDirector(directorData || null);
+
+        // Fetch trailer
         const videoRes = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
         );
@@ -120,16 +124,32 @@ export default function MovieDetail() {
         <p>
           <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
         </p>
-        <br></br>
-
+        <br />
         <p className="movie-detail-overview">{overview}</p>
+
+        {/* Director Info */}
+        {director && (
+          <div className="movie-detail-director">
+            <h3>Director</h3>
+            <Link to={`/person/${director.id}`} className="movie-detail-cast-card">
+              {director.profile_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${director.profile_path}`}
+                  alt={director.name}
+                />
+              ) : (
+                <div className="movie-detail-director-placeholder" />
+              )}
+              <p>{director.name}</p>
+            </Link>
+          </div>
+        )}
       </div>
 
       <h3 className="movie-detail-cast-heading">Cast</h3>
       <div className="movie-detail-cast-scroll">
         {cast
           .filter((actor) => actor.profile_path)
-          .slice(0, 20)
           .map((actor) => (
             <Link
               to={`/person/${actor.id}`}

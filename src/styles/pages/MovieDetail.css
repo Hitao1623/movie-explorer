@@ -1,5 +1,5 @@
 .movie-detail-container {
-  padding: 40px 20px;
+  padding: 0px 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
   color: white;
@@ -15,7 +15,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-bottom: 40px;
+ 
   margin-top: 0;
 }
 
@@ -77,6 +77,30 @@
   margin-top: 12px;
 }
 
+.movie-detail-director {
+  margin-top: 30px;
+}
+
+.movie-detail-director h3 {
+  margin-bottom: 10px;
+}
+
+.movie-detail-director .movie-detail-cast-card {
+  display: inline-block;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.movie-detail-director-placeholder {
+  width: 92px;
+  height: 138px;
+  background-color: #444;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+
 .movie-detail-cast-heading {
   margin-top: 40px;
   margin-bottom: 16px;
@@ -89,6 +113,10 @@
   padding: 10px 0;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+}
+
+.movie-detail-cast-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .movie-detail-cast-card {
