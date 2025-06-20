@@ -4,9 +4,10 @@ import FavoriteButton from "../components/FavoriteButton";
 import "../styles/pages/MovieDetail.css";
 
 export default function MovieDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id } = useParams(); // Get the movie ID from the URL
+  const navigate = useNavigate(); // Hook for navigation
 
+  // State variables
   const [movie, setMovie] = useState(null);
   const [director, setDirector] = useState(null);
   const [cast, setCast] = useState([]);
@@ -19,6 +20,7 @@ export default function MovieDetail() {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
+        // Fetch basic movie data
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
         );
@@ -26,19 +28,20 @@ export default function MovieDetail() {
         const data = await res.json();
         setMovie(data);
 
-        // Fetch cast and crew
+        // Fetch credits (cast and crew)
         const creditsRes = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`
         );
         const creditsData = await creditsRes.json();
-        setCast(creditsData.cast.slice(0, 20));
+        setCast(creditsData.cast.slice(0, 20)); // Limit to 20 actors
 
+        // Find director in crew list
         const directorData = creditsData.crew.find(
           (member) => member.job === "Director"
         );
         setDirector(directorData || null);
 
-        // Fetch trailer
+        // Fetch trailer video (YouTube)
         const videoRes = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
         );
@@ -60,10 +63,12 @@ export default function MovieDetail() {
     fetchMovie();
   }, [id]);
 
+  // Handle loading and error states
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="error">{error}</p>;
   if (!movie) return null;
 
+  // Destructure movie properties
   const {
     title,
     poster_path,
@@ -75,19 +80,23 @@ export default function MovieDetail() {
     tagline,
   } = movie;
 
+  // Use poster image or fallback
   const imageUrl = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : "/default-poster.jpg";
 
   return (
     <div className="movie-detail-container">
+      {/* Back button */}
       <button className="movie-detail-back" onClick={() => navigate(-1)}>
         ← Back
       </button>
 
+      {/* Title and tagline */}
       <h2 className="movie-detail-title">{title}</h2>
       {tagline && <p className="movie-detail-tagline">{tagline}</p>}
 
+      {/* Poster and Trailer */}
       <div className="movie-detail-media">
         <div className="movie-detail-poster-wrapper">
           <img
@@ -100,6 +109,7 @@ export default function MovieDetail() {
           </div>
         </div>
 
+        {/* Embedded YouTube trailer */}
         {trailerUrl && (
           <iframe
             className="movie-detail-trailer"
@@ -111,23 +121,16 @@ export default function MovieDetail() {
         )}
       </div>
 
+      {/* Movie metadata */}
       <div className="movie-detail-info">
-        <p>
-          <strong>Release Date:</strong> {release_date}
-        </p>
-        <p>
-          <strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}
-        </p>
-        <p>
-          <strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}
-        </p>
-        <p>
-          <strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}
-        </p>
+        <p><strong>Release Date:</strong> {release_date}</p>
+        <p><strong>Runtime:</strong> {runtime ? `${runtime} mins` : "N/A"}</p>
+        <p><strong>Rating:</strong> {vote_average ? vote_average.toFixed(1) : "N/A"}</p>
+        <p><strong>Genres:</strong> {genres?.map((g) => g.name).join(", ") || "N/A"}</p>
         <br />
         <p className="movie-detail-overview">{overview}</p>
 
-        {/* Director Info */}
+        {/* Director Info Section */}
         {director && (
           <div className="movie-detail-director">
             <h3>Director</h3>
@@ -146,10 +149,11 @@ export default function MovieDetail() {
         )}
       </div>
 
+      {/* Cast list */}
       <h3 className="movie-detail-cast-heading">Cast</h3>
       <div className="movie-detail-cast-scroll">
         {cast
-          .filter((actor) => actor.profile_path)
+          .filter((actor) => actor.profile_path) // Only show actors with profile images
           .map((actor) => (
             <Link
               to={`/person/${actor.id}`}
