@@ -105,20 +105,18 @@ export default function Navbar() {
 
       {/* Right Section: Navigation Links (Register / Login / Favorites) */}
       <div className="navbar-right">
-
-        {user ? (
+        {user ?
           <>
             <span style={{ marginRight: "1rem" }}>Welcome, {user.username}</span>
             <button onClick={() => logout()} style={{ cursor: "pointer" }}>
               Logout
             </button>
           </>
-        ) : (
-          <>
+        : <>
             <Link to="/register">Register</Link>
             <Link to="/login">Login</Link>
           </>
-        )}
+        }
 
         <Link to="/favorites">Favorites</Link>
       </div>

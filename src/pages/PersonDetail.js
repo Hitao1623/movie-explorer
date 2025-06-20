@@ -33,7 +33,7 @@ export default function PersonDetail() {
         const resPerson = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${API_KEY}`);
         const dataPerson = await resPerson.json();
 
-        // Fetch combined credits (movies + TV)
+        // Fetch combined credits
         const resCredits = await fetch(`https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=${API_KEY}`);
         const dataCredits = await resCredits.json();
 

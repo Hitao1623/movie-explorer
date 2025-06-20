@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import Pagination from "../components/Pagination";
+import CelebCard from "../components/CelebCard"; // import the new component
 import "../styles/pages/Search.css";
-import { Link } from "react-router-dom";
 
 export default function Search() {
   // TMDB API Key
@@ -118,7 +118,7 @@ export default function Search() {
         {totalResults.toLocaleString()} Results for "{category === "genres" ? getGenreNameById(query) : query}"
       </h2>
 
-      {/* NEW: Show sort buttons when searching by genre */}
+      {/* Show sort buttons when searching by genre */}
       {category === "genres" && (
         <div className="sort-buttons">
           <button className={sortBy === "popularity.desc" ? "active" : ""} onClick={() => setSortBy("popularity.desc")}>
@@ -146,26 +146,9 @@ export default function Search() {
       <div className="search-results">
         {
           category === "celebs" ?
-            // Render celeb cards
-            results.map((person) => {
-              // NEW: fallback image if no profile_path
-              const imageUrl = person.profile_path ? `https://image.tmdb.org/t/p/w200${person.profile_path}` : "/default-poster.jpg";
-
-              return (
-                <div key={person.id} className="celeb-card">
-                  {/* Celeb image (with fallback) */}
-                  <Link to={`/person/${person.id}`}>
-                    <img src={imageUrl} alt={person.name} className="celeb-image" />
-                  </Link>
-                  <p>
-                    <Link to={`/person/${person.id}`} className="celeb-name-link">
-                      {person.name}
-                    </Link>
-                  </p>
-                </div>
-              );
-            })
-            // Render movie cards (use reusable MovieCard component)
+            // Render celeb cards using CelebCard component
+            results.map((person) => <CelebCard key={person.id} person={person} />)
+            // Render movie cards using reusable MovieCard component
           : results.map((movie) => <MovieCard key={movie.id} movie={movie} />)
         }
       </div>
