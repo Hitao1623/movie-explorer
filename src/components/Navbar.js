@@ -106,26 +106,22 @@ export default function Navbar() {
 
       {/* Right Section: Navigation Links (Register / Login / Favorites) */}
       <div className="navbar-right">
-
-        {user ? (
+        {user ?
           <>
             <span className="welcome-message">Welcome, {user.username}</span>
             <Link to="/favorites">Favorites</Link>
-            <button onClick={() => logout()}
-              className="logout-button"
-              aria-label="Logout"
-              title="Logout" 
-            >
+            <button onClick={() => logout()} className="logout-button" aria-label="Logout" title="Logout">
               <FiLogOut />
             </button>
           </>
-        ) : (
-          <>
+        : <>
             <Link to="/register">Register</Link>
             <Link to="/login">Login</Link>
             <Link to="/favorites">Favorites</Link>
           </>
-        )}
+        }
+
+        <Link to="/favorites">Favorites</Link>
       </div>
     </nav>
   );

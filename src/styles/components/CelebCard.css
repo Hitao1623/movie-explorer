@@ -1,0 +1,30 @@
+.celeb-card {
+  margin: 10px;
+  width: 200px;
+  text-align: center;
+  color: black;
+}
+
+.celeb-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.celeb-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.celeb-name-link {
+  text-decoration: none;
+  color: black;
+}
+
+.celeb-name-link:hover {
+  color: #1da1f2;
+}

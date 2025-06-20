@@ -5,11 +5,10 @@ import "../styles/components/MovieCard.css";
 
 // MovieCard component receives a movie object as prop
 export default function MovieCard({ movie }) {
-  // Destructure fields from movie object
-  const { id, title, poster_path, release_date, vote_average } = movie;
-
   // State: track if mouse is hovering on this card (used to show hover effect)
   const [isHovered, setIsHovered] = useState(false);
+  // Destructure fields from movie object
+  const { id, title, poster_path, release_date, vote_average } = movie;
 
   // Compute image URL for movie poster (fallback to default image if none)
   const imageUrl =
